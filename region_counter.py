@@ -1,11 +1,11 @@
 from enum import Enum
 from config import (
-    GREEN_PER_VEHICLE,
     MIN_GREEN,
     MAX_GREEN,
     YELLOW_TIME,
     ALL_RED_TIME,
     JML_KELUAR_PERMENIT,
+    MAX_VEHICLE_COUNT,
 )
 from datetime import datetime
 import math
@@ -39,7 +39,7 @@ class trafficController :
             selArah : dataLampu = self.statLampu[camNumber]
             selArah.status = newstatus
             if newstatus == statusLampu.GREEN :
-                self.LampTimer = MAX_GREEN
+                self.LampTimer = self.getProbabilitasGreenTime(camNumber)
             elif newstatus == statusLampu.YELLOW :
                 self.LampTimer = YELLOW_TIME
             else : #RED
@@ -123,7 +123,11 @@ class trafficController :
     
     def getProbabilitasGreenTime(self, camNumber):
         selArah : dataLampu = self.statLampu[camNumber]
-        hasil = math.ceil(60 * selArah.jmlQueue / JML_KELUAR_PERMENIT)
+        if MAX_VEHICLE_COUNT <= 0:
+            return MIN_GREEN
+        rasio = min(max(selArah.jmlQueue, 0), MAX_VEHICLE_COUNT) / MAX_VEHICLE_COUNT
+        hasil = MIN_GREEN + (rasio * (MAX_GREEN - MIN_GREEN))
+        hasil = int(round(hasil))
         if hasil > MAX_GREEN :
             hasil = MAX_GREEN 
         elif hasil < MIN_GREEN :
