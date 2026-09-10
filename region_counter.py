@@ -20,6 +20,7 @@ class dataLampu:
     def __init__(self, name):
         self.status = statusLampu.RED
         self.jmlQueue = 0
+        self.keluarBuffer = 0.0
         self.theId = []
         self.startRed = datetime.now()
         self.nama = name
@@ -43,6 +44,7 @@ class trafficController :
                 self.LampTimer = YELLOW_TIME
             else : #RED
                 selArah.theId.clear()
+                selArah.keluarBuffer = 0.0
                 selArah.startRed = datetime.now()
                 if camNumber == 3:
                     self._setStatusLampu_(statusLampu.GREEN, 0)
@@ -92,7 +94,11 @@ class trafficController :
         for index in range(0, 4) :
             lampu = self.statLampu[index]
             if lampu.status == statusLampu.GREEN :
-                lampu.jmlQueue = lampu.jmlQueue - round(JML_KELUAR_PERMENIT / 60)
+                lampu.keluarBuffer += JML_KELUAR_PERMENIT / 60
+                jumlahKeluar = min(lampu.jmlQueue, int(lampu.keluarBuffer))
+                if jumlahKeluar > 0:
+                    lampu.jmlQueue -= jumlahKeluar
+                    lampu.keluarBuffer -= jumlahKeluar
                 if lampu.jmlQueue <= 0 :
                     lampu.jmlQueue = 0
                     if (MAX_GREEN - self.LampTimer) >= MIN_GREEN :
@@ -142,4 +148,3 @@ class TrafficTimer:
 
     def Stop(self):
         self.status = "stop"
-
