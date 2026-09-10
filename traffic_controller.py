@@ -1,11 +1,11 @@
 import time
 
 from config import (
-    GREEN_PER_VEHICLE,
     MIN_GREEN,
     MAX_GREEN,
     YELLOW_TIME,
-    ALL_RED_TIME
+    ALL_RED_TIME,
+    MAX_VEHICLE_COUNT,
 )
 
 
@@ -97,28 +97,11 @@ class TrafficController:
     # =====================================================
 
     def calculate_green(self, queue):
-
-        green = (
-
-            MIN_GREEN
-
-            +
-
-            queue * GREEN_PER_VEHICLE
-
-        )
-
-
-        green = min(
-
-            green,
-
-            MAX_GREEN
-
-        )
-
-
-        return green
+        if MAX_VEHICLE_COUNT <= 0:
+            return MIN_GREEN
+        ratio = min(max(queue, 0), MAX_VEHICLE_COUNT) / MAX_VEHICLE_COUNT
+        green = MIN_GREEN + (ratio * (MAX_GREEN - MIN_GREEN))
+        return int(round(min(max(green, MIN_GREEN), MAX_GREEN)))
 
 
     # =====================================================

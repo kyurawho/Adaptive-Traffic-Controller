@@ -56,10 +56,9 @@ REGIONS = [HEAVY_REGION, MEDIUM_REGION, MEDIUM1_REGION, LIGHT_REGION]
 # TRAFFIC LIGHT
 # =====================================================
 
-# Setiap 1 kendaraan
-# mendapatkan tambahan 10 detik green
-
-GREEN_PER_VEHICLE = 10
+# Jumlah kendaraan acuan maksimum (Nmax)
+# untuk interpolasi durasi lampu hijau
+MAX_VEHICLE_COUNT = 100
 
 # Minimum green
 MIN_GREEN = 10
