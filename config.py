@@ -1,10 +1,19 @@
+import os
 import numpy as np
 
 # =====================================================
 # YOLO MODEL
 # =====================================================
 
-MODEL_PATH = "yolo26n.pt"
+MODEL_OPTIONS = {
+    "yolov8n": "yolov8n.pt",
+    "yolo26n": "yolo26n.pt",
+}
+
+DEFAULT_MODEL = "yolo26n"
+SELECTED_MODEL = os.getenv("YOLO_MODEL", DEFAULT_MODEL).lower()
+MODEL_PATH = MODEL_OPTIONS.get(SELECTED_MODEL, MODEL_OPTIONS[DEFAULT_MODEL])
+ACTIVE_MODEL_NAME = SELECTED_MODEL if SELECTED_MODEL in MODEL_OPTIONS else DEFAULT_MODEL
 
 CONFIDENCE = 0.6
 
