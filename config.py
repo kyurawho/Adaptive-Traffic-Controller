@@ -28,7 +28,7 @@ VIDEO_PATHS = [
     "heavy_traffic.mp4",
     "medium_video.mp4",
     "medium_video1.mp4",
-    "light_traffic.mp4"
+    "Screen Recording 2026-09-15 103906.mp4"
 ]
 
 
@@ -48,7 +48,7 @@ VIDEO_PATHS = [
 HEAVY_REGION = np.array([[250, 400], [850, 400], [1000, 550], [60, 550]], dtype=np.int32)
 MEDIUM_REGION = np.array([[200, 500], [580, 500], [550, 620], [30, 620]], dtype=np.int32)
 MEDIUM1_REGION = np.array([[39, 76], [381, 76], [710, 280], [60, 280]], dtype=np.int32)
-LIGHT_REGION = np.array([[550, 150], [780, 150], [900, 300], [500, 300]], dtype=np.int32)
+LIGHT_REGION = np.array([[788, 126], [1038, 272], [33, 377], [75, 182]], dtype=np.int32)
 
 REGIONS = [HEAVY_REGION, MEDIUM_REGION, MEDIUM1_REGION, LIGHT_REGION]
 
@@ -64,7 +64,7 @@ MAX_VEHICLE_COUNT = 100
 MIN_GREEN = 10
 
 # Maximum green
-MAX_GREEN = 30
+MAX_GREEN = 100
 
 # Durasi kuning
 YELLOW_TIME = 3
@@ -72,7 +72,7 @@ YELLOW_TIME = 3
 # Durasi semua merah sebelum pindah
 ALL_RED_TIME = 2
 
-JML_KELUAR_PERMENIT = 15
+JML_KELUAR_PERMENIT = 50
 
 # =====================================================
 # DASHBOARD
@@ -88,43 +88,31 @@ WINDOW_HEIGHT = VIDEO_HEIGHT * 2
 
 WINDOW_NAME = "Adaptive Traffic Controller"
 
-
 # =====================================================
 # WARNA
 # =====================================================
 
 BLACK = (20, 20, 20)
-
 WHITE = (255, 255, 255)
-
 GREEN = (0, 255, 0)
-
 RED = (0, 0, 255)
-
 YELLOW = (0, 255, 255)
-
 BLUE = (255, 150, 0)
-
 GRAY = (120, 120, 120)
-
 
 # =====================================================
 # FONT
 # =====================================================
 
 FONT = 0
-
 FONT_SCALE = 0.7
-
 THICKNESS = 2
-
 
 # =====================================================
 # TITLE
 # =====================================================
 
 TITLE = "ADAPTIVE TRAFFIC CONTROLLER"
-
 
 # =====================================================
 # VIDEO LOOP

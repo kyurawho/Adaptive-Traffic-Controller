@@ -73,7 +73,6 @@ while True:
 # ==========================================
 # RELEASE
 # ==========================================
-
 trafficTimer.Stop()
 
 for i in range (0, videonumber) :
