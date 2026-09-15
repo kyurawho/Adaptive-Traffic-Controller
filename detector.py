@@ -1,6 +1,7 @@
 import cv2
 from ultralytics import YOLO
 from config import (
+    ACTIVE_MODEL_NAME,
     MODEL_PATH,
     CONFIDENCE,
     VEHICLE_CLASSES,
@@ -14,6 +15,7 @@ class VehicleDetector:
     def __init__(self):
         self.model = YOLO(MODEL_PATH)
         self.model.to("cuda")
+        print(f"Model aktif: {ACTIVE_MODEL_NAME} ({MODEL_PATH})")
 
     def detect(self, frame, queue_region):
         try :
