@@ -109,11 +109,44 @@ def run_experiment_mode(args, video_paths, processImage, active_model_name):
         print(f"Gagal membuka video : {video_path}")
         return
 
+    ok, countdown_frame = cap.read()
+    if not ok or countdown_frame is None:
+        print(f"Gagal membaca frame awal video : {video_path}")
+        cap.release()
+        return
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
     processor = processImage(cap, video_index, video_path)
     manual_count = 0
     detected_ids = set()
-    start_time = time.perf_counter()
     status = "completed"
+
+    for count in range(5, 0, -1):
+        frame = countdown_frame.copy()
+        text = str(count)
+        text_size, _ = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 4, 8)
+        text_x = (frame.shape[1] - text_size[0]) // 2
+        text_y = (frame.shape[0] + text_size[1]) // 2
+        cv2.putText(
+            frame,
+            text,
+            (text_x, text_y),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            4,
+            (0, 0, 255),
+            8,
+        )
+        cv2.putText(
+            frame,
+            "Eksperimen dimulai dalam...",
+            (20, 40),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (255, 255, 255),
+            2,
+        )
+        cv2.imshow("Experiment Mode", frame)
+        cv2.waitKey(1000)
 
     if args.experiment == "30s":
         print("Eksperimen 30 detik dimulai.")
@@ -123,6 +156,7 @@ def run_experiment_mode(args, video_paths, processImage, active_model_name):
             "Tekan tombol M setiap kali 1 kendaraan real lewat region."
         )
     print("Tekan ESC untuk menghentikan eksperimen lebih awal.")
+    start_time = time.perf_counter()
 
     while True:
         detections, frame = processor.processFrame()
